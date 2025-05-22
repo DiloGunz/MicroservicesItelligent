@@ -1,0 +1,82 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36119.2
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01. EndPoint", "01. EndPoint", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Services", "02. Services", "{5E522EF2-C291-4B79-9273-D4C84B834723}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03. Models", "03. Models", "{50D049C0-61AB-4AC2-950C-A703065CA0AF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05. Persistence", "05. Persistence", "{FEDA0913-4FC7-4ED7-A0EF-16F01B6511E7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06. Shared", "06. Shared", "{7C2E6E2B-E98A-4430-9362-EDDE9F453BD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Domain", "src\AuthService.Domain\AuthService.Domain.csproj", "{A6F52E25-93B4-413F-BEA2-6C633449A275}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.API", "src\AuthService.API\AuthService.API.csproj", "{9CF51704-91E5-4BA3-A799-D2FA486750C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Application", "src\AuthService.Application\AuthService.Application.csproj", "{049536A7-DCEC-447C-9B59-60B1158C7DB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Uow.Abstraction", "src\AuthService.Uow.Abstraction\AuthService.Uow.Abstraction.csproj", "{F0CE83D8-D9EE-468B-9C9A-A9518A7ABAAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Uow.SQLite", "src\AuthService.Uow.SQLite\AuthService.Uow.SQLite.csproj", "{6423D752-8EEC-46D0-A987-41C20DF5ABA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Repository.Abstraction", "src\AuthService.Repository.Abstraction\AuthService.Repository.Abstraction.csproj", "{22B33861-5345-42AB-B7B7-74166E94AC11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Repository.SQLite", "src\AuthService.Repository.SQLite\AuthService.Repository.SQLite.csproj", "{B49C2C8E-5857-4251-947B-089EBE87A0EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04. UnitOfWork", "04. UnitOfWork", "{D5B95392-9288-4E66-AE32-4B8DF080BD1C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6F52E25-93B4-413F-BEA2-6C633449A275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6F52E25-93B4-413F-BEA2-6C633449A275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6F52E25-93B4-413F-BEA2-6C633449A275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6F52E25-93B4-413F-BEA2-6C633449A275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CF51704-91E5-4BA3-A799-D2FA486750C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CF51704-91E5-4BA3-A799-D2FA486750C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CF51704-91E5-4BA3-A799-D2FA486750C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CF51704-91E5-4BA3-A799-D2FA486750C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{049536A7-DCEC-447C-9B59-60B1158C7DB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{049536A7-DCEC-447C-9B59-60B1158C7DB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{049536A7-DCEC-447C-9B59-60B1158C7DB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{049536A7-DCEC-447C-9B59-60B1158C7DB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0CE83D8-D9EE-468B-9C9A-A9518A7ABAAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0CE83D8-D9EE-468B-9C9A-A9518A7ABAAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0CE83D8-D9EE-468B-9C9A-A9518A7ABAAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0CE83D8-D9EE-468B-9C9A-A9518A7ABAAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6423D752-8EEC-46D0-A987-41C20DF5ABA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6423D752-8EEC-46D0-A987-41C20DF5ABA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6423D752-8EEC-46D0-A987-41C20DF5ABA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6423D752-8EEC-46D0-A987-41C20DF5ABA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22B33861-5345-42AB-B7B7-74166E94AC11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22B33861-5345-42AB-B7B7-74166E94AC11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22B33861-5345-42AB-B7B7-74166E94AC11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22B33861-5345-42AB-B7B7-74166E94AC11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B49C2C8E-5857-4251-947B-089EBE87A0EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B49C2C8E-5857-4251-947B-089EBE87A0EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B49C2C8E-5857-4251-947B-089EBE87A0EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B49C2C8E-5857-4251-947B-089EBE87A0EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A6F52E25-93B4-413F-BEA2-6C633449A275} = {50D049C0-61AB-4AC2-950C-A703065CA0AF}
+		{9CF51704-91E5-4BA3-A799-D2FA486750C4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{049536A7-DCEC-447C-9B59-60B1158C7DB4} = {5E522EF2-C291-4B79-9273-D4C84B834723}
+		{F0CE83D8-D9EE-468B-9C9A-A9518A7ABAAF} = {D5B95392-9288-4E66-AE32-4B8DF080BD1C}
+		{6423D752-8EEC-46D0-A987-41C20DF5ABA3} = {D5B95392-9288-4E66-AE32-4B8DF080BD1C}
+		{22B33861-5345-42AB-B7B7-74166E94AC11} = {FEDA0913-4FC7-4ED7-A0EF-16F01B6511E7}
+		{B49C2C8E-5857-4251-947B-089EBE87A0EF} = {FEDA0913-4FC7-4ED7-A0EF-16F01B6511E7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {436D5145-0770-417C-8678-0ECFD7C85F3D}
+	EndGlobalSection
+EndGlobal
