@@ -1,0 +1,83 @@
+﻿@page
+@model BlogApp.FrontEnd.Pages.Articles.CreateModel
+@{
+    ViewData["Title"] = "Crear Artículo";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div id="registerResult" class="alert d-none"></div>
+
+<form id="fromCreate">
+    <div class="mb-3">
+        <label class="form-label">Título *</label>
+        <input type="text" name="Titulo" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Resumen</label>
+        <input type="text" name="Summary" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Contenido *</label>
+        <textarea type="text" name="Content" class="form-control" rows="6"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a asp-page="/Articles/Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    <script type="text/javascript">
+        $("#fromCreate").submit(function(e){
+            e.preventDefault();
+            var jsonData = {};
+            var frm = $('#fromCreate');
+            var formData = new FormData(frm[0]);
+            formData.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+            var url = "@Url.Page("/articles/create")";
+            console.log(jsonData);
+            $.ajax({
+                    url: url,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(jsonData),
+                    success: function (response) {
+                        if(response.IsSuccess){
+                            $('#registerResult')
+                            .removeClass('d-none alert-danger')
+                            .addClass('alert-success')
+                            .text('Login exitoso, redireccionando...')
+                            .fadeIn();
+
+                            setTimeout(() => {
+                                $("#registroModal").modal('hide');
+                            }, 1000);
+                        }
+                        else{
+                            $('#registerResult')
+                            .removeClass('d-none alert-success')
+                            .addClass('alert-danger')
+                            .text(response.Message)
+                            .fadeIn();
+                        }
+                    },
+                    error: function (xhr) {
+                        let message = 'Error al iniciar sesión.';
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            message = xhr.responseJSON.message;
+                        }
+
+                        $('#loginResult')
+                            .removeClass('d-none alert-success')
+                            .addClass('alert-danger')
+                            .text(message)
+                            .fadeIn();
+                    }
+                });
+        });
+    </script>
+}
