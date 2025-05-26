@@ -78,7 +78,7 @@ El sistema incluye usuarios precargados para testing:
 - **Bootstrap** - Estructura y estilos
 - **JavaScript** - Interactividad del cliente
 
-## 🚦 Estado del Proyecto
+## Estado del Proyecto
 
 - Sistema de autenticación implementado
 - CRUD de artículos funcional  
