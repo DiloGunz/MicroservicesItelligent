@@ -60,7 +60,7 @@ public class AuthController : ApiControllerBase
 	}
 
 	/// <summary>
-	/// login
+	/// Identificaión de usuario mediante usuario y contraseña
 	/// </summary>
 	/// <param name="command">DTO de usuario y contraseña</param>
 	/// <returns></returns>
