@@ -47,7 +47,7 @@ El proyecto está dividido en **3 soluciones independientes** que trabajan en co
    - BlogApp_Articles: `https://localhost:7292`
    - BlogApp_FrontEnd: `https://localhost:7158`  
    
-## 👥 Usuarios de Prueba
+## Usuarios de Prueba
 
 El sistema incluye usuarios precargados para testing:
 
@@ -61,7 +61,7 @@ El sistema incluye usuarios precargados para testing:
 
 > **Nota:** La contraseña de cada usuario es idéntica a su nombre de usuario.
 
-## 🛠️ Stack Tecnológico
+## Stack Tecnológico
 
 ### Backend
 - **.NET 8** - Framework principal
