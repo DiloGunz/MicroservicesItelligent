@@ -67,7 +67,13 @@ public static class DependencyInjection
 
     private static IServiceCollection AddAuth(this IServiceCollection services)
     {
-        services.AddAuthorization();
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("AdminOrOwner", policy =>
+                policy.Requirements.Add(new AdminOrOwnerRequirement()));
+        });
+
+        services.AddScoped<IAuthorizationHandler, AdminOrOwnerHandler>();
 
         services.AddControllers(config =>
         {

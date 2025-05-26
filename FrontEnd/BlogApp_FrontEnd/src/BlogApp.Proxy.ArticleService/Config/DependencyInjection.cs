@@ -9,6 +9,7 @@ public static class DependencyInjection
     {
         services.AddHttpClient<ArticleHttpClient>();
         services.AddTransient<IArticleProxy, ArticleProxy>();
+        services.AddTransient<ICommentProxy, CommentProxy>();
         return services;
     }
 }

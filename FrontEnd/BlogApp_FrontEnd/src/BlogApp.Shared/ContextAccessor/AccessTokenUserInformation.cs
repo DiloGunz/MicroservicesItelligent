@@ -7,4 +7,5 @@ public record AccessTokenUserInformation
     public string unique_name { get; set; }
     public int exp { get; set; }
     public string user_json { get; set; }
+    public string role { get; set; }
 }

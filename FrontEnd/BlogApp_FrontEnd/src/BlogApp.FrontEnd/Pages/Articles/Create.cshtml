@@ -11,7 +11,7 @@
 <form id="fromCreate">
     <div class="mb-3">
         <label class="form-label">Título *</label>
-        <input type="text" name="Titulo" class="form-control" />
+        <input type="text" name="Title" class="form-control" />
     </div>
 
     <div class="mb-3">
@@ -50,11 +50,11 @@
                             $('#registerResult')
                             .removeClass('d-none alert-danger')
                             .addClass('alert-success')
-                            .text('Login exitoso, redireccionando...')
+                            .text('Creación exitosa, redireccionando...')
                             .fadeIn();
 
                             setTimeout(() => {
-                                $("#registroModal").modal('hide');
+                                window.location.href = response.Url;
                             }, 1000);
                         }
                         else{
@@ -66,7 +66,7 @@
                         }
                     },
                     error: function (xhr) {
-                        let message = 'Error al iniciar sesión.';
+                        let message = 'Error al crear el registro.';
                         if (xhr.responseJSON && xhr.responseJSON.message) {
                             message = xhr.responseJSON.message;
                         }

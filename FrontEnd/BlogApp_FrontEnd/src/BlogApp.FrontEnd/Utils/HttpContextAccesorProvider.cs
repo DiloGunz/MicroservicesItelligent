@@ -1,6 +1,5 @@
 ﻿using BlogApp.Shared.ContextAccessor;
 using System.Security.Claims;
-using System.Text.Json;
 
 namespace BlogApp.FrontEnd.Utils;
 
@@ -60,66 +59,34 @@ public class HttpContextAccesorProvider : IHttpContextAccesorProvider
     {
         try
         {
-            var jUser = GetCurrentUserAsJson();
+            var user = _contextAccessor.HttpContext!.User;
 
-            var userDto = JsonSerializer.Deserialize<CurrentUserDto>(jUser);
-
-            if (userDto is null)
+            if (user == null)
             {
-                throw new ArgumentNullException(nameof(userDto));
+                throw new ArgumentNullException(nameof(user));
             }
 
-            return userDto;
+            var identity = user.Identity;
+
+            if (identity == null)
+            {
+                throw new ArgumentNullException(nameof(identity));
+            }
+
+            var claimUserName = ((ClaimsIdentity)identity).FindFirst(ClaimTypes.Name);
+            var claimUserId = ((ClaimsIdentity)identity).FindFirst(ClaimTypes.NameIdentifier);
+
+            var result = new CurrentUserDto()
+            {
+                UserName = claimUserName!.Value,
+                Id = Convert.ToInt64(claimUserId!.Value)
+            };
+
+            return result;
         }
         catch (Exception)
         {
             return new CurrentUserDto();
         }
-    }
-
-    public string GetCurrentUserAsJson()
-    {
-        string jUser = "{}";
-        try
-        {
-            if (_contextAccessor.HttpContext != null)
-            {
-                var user = _contextAccessor.HttpContext.User;
-
-                if (user == null)
-                {
-                    throw new ArgumentNullException(nameof(user));
-                }
-
-                var identity = user.Identity;
-
-                if (identity == null)
-                {
-                    throw new ArgumentNullException(nameof(identity));
-                }
-
-                //if (!identity.IsAuthenticated)
-                //{
-                //    throw new InvalidOperationException("ERROR DE LOGUEO");
-                //}
-
-
-                var claimUserData = ((ClaimsIdentity)identity).FindFirst("user_json");
-
-                if (claimUserData == null)
-                {
-                    throw new ArgumentNullException(nameof(claimUserData));
-                }
-
-                jUser = claimUserData.Value;
-            }
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, $"ERROR GET USER AS JSON: {ex.Message}");
-            return "{}";
-        }
-
-        return jUser;
     }
 }

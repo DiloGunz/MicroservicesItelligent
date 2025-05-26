@@ -6,41 +6,73 @@
 
 <h2>@ViewData["Title"]</h2>
 
+<div class="container">
+    <form id="frmSearch" class="row g-3">
+        <div class="col-2">
+            <label for="searchInput" class="col-form-label">Buscar</label>
+        </div>
+        <div class="col-6">
+            <input type="text" class="form-control" id="searchInput" placeholder="Escribe tu filtro...">
+        </div>
+        <div class="col-2">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
+</div>
+
 <div class="d-flex justify-content-end mb-3">
     <a asp-page="/Articles/Create" class="btn btn-primary">Crear Nuevo</a>
 </div>
 
-@if (!Model.ArticleList.HasItems)
-{
-    <div class="alert alert-info">No hay artículos disponibles.</div>
-}
-else
-{
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Título</th>
-                <th>Creado el</th>
-                <th>Creado por</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var article in Model.ArticleList.Items)
-            {
-                <tr>
-                    <td>@article.Id</td>
-                    <td>@article.Title</td>
-                    <td>@article.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
-                    <td>@article.CreatedBy</td>
-                    <td>
-                        <a href="#" class="btn btn-sm btn-success">Detalles</a>
-                        <a href="#" class="btn btn-sm  btn-primary">Editar</a>
-                        <a href="#" class="btn btn-sm  btn-danger">Eliminar</a>
-                    </td>
-                </tr>
+<div id="results">
+    <partial name="_ArticlesList" model="Model.ArticleList" />
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(function () {
+            $('#frmSearch').on('submit', function (e) {
+                e.preventDefault();
+                SearchEvt();
+            });
+        });
+
+        function Delete_click(id){
+            var response = confirm("¿Desea eliminar el registro?");
+            if(response){
+                var url = '@Url.Page("/Articles/index", "delete")';
+                console.log(url);
+                $.post(url, { id:id })
+                    .done(function(response){
+                        if(response.IsSuccess){
+                            SearchEvt();
+                        } else {
+                            alert(response.Message);
+                        }
+                    })
+                    .fail(function() {
+                        alert("Error al intentar eliminar.");
+                    });
             }
-        </tbody>
-    </table>
+        }
+
+        function evtChangePage(page){
+            $("#inputPage").val(page);
+            SearchEvt();
+        }
+
+        function SearchEvt(){
+            var criteria = $('#searchInput').val().trim();
+            var newPage = parseInt($("#inputPage").val()) || 1;
+            var url = '@Url.Page("Index", "Search")'
+            $.get(url, { p: newPage, criteria: criteria })
+                .done(function (data) {
+                            $('#results').html(data);
+                 })
+                 .fail(function () {
+                            alert('Error al buscar');
+                        });
+        }
+    </script>
 }

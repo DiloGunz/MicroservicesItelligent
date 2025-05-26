@@ -4,6 +4,7 @@ using ArticlesService.Application.Models.Commands.CommentCommands;
 using ArticlesService.Application.Models.Queries.ArticleQueries;
 using ErrorOr;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArticlesService.API.Controllers;
@@ -26,9 +27,16 @@ public class ArticleController : ApiControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetPaged([FromQuery] GetPagedArticleQuery command)
+    public async Task<IActionResult> GetPaged([FromQuery] GetPagedArticleQuery query)
     {
-        var response = await _mediator.Send(command);
+        var response = await _mediator.Send(query);
+        return response.Match(x => Ok(x), e => Problem(e));
+    }
+
+    [HttpGet("[action]")]
+    public async Task<IActionResult> GetPagedLast([FromQuery] GetPagedLastArticleQuery query)
+    {
+        var response = await _mediator.Send(query);
         return response.Match(x => Ok(x), e => Problem(e));
     }
 
@@ -39,6 +47,7 @@ public class ArticleController : ApiControllerBase
         return response.Match(x => Ok(x), e => Problem(e)); 
     }
 
+    [Authorize(Policy = "AdminOrOwner")]
     [HttpPut("{id}")]
     public async Task<IActionResult> Edit(long id, [FromBody]EditArticleCommand command)
     {
@@ -50,6 +59,7 @@ public class ArticleController : ApiControllerBase
         return response.Match(x => Ok(x), e => Problem(e));
     }
 
+    [Authorize(Policy = "AdminOrOwner")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(long id)
     {

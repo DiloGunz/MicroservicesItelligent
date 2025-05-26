@@ -1,0 +1,19 @@
+﻿@using ArticleService.Application.Models.Dtos.CommentDtos
+@using BlogApp.Shared.Constant
+@model List<CommentDto>
+
+<h5 class="fw-bold text-danger">Comentarios (@Model.Count())</h5>
+
+<div class="mb-3">
+    <textarea class="form-control" rows="3" placeholder="Escribe un comentario..." id="inputComment"></textarea>
+</div>
+<button type="button" class="btn btn-primary" onclick="evtSaveComment();">Publicar</button>
+
+@foreach (var comment in Model)
+{
+    <hr />
+    <div class="mb-3">
+        <small class="text-muted">Publicado por @comment.CreatedByName el @comment.CreatedAt.ToString(Parameters.FormatDateTime)</small>
+        <p>@comment.Content</p>
+    </div>
+}

@@ -8,6 +8,7 @@ public static class DependencyInjection
     public static IServiceCollection AddAuthService(this IServiceCollection services)
     {
         services.AddHttpClient<AuthHttpClient>();
+        services.AddHttpClient<AuthIdentityHttpClient>();
         services.AddTransient<ILoginService, LoginService>();
         services.AddTransient<IUserProxy, UserProxy>();
         return services;

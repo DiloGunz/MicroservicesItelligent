@@ -8,4 +8,5 @@ public record ArticleDetailsDto
     public string Content { get; set; }
     public DateTime CreatedAt { get; set; }
     public long CreatedBy { get; set; }
+    public string CreatedByName { get; set; }
 }

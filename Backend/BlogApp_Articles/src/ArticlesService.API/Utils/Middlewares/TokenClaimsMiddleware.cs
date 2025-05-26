@@ -18,7 +18,7 @@ public class TokenClaimsMiddleware
         if (user.Identity?.IsAuthenticated == true)
         {
             var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var role = user.FindFirst(ClaimTypes.Name)?.Value;
+            var role = user.FindFirst("role")?.Value;
 
             var listClaims = user.Claims.ToList();
 

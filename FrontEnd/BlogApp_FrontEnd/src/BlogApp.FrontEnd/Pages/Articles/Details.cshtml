@@ -1,0 +1,90 @@
+﻿@page
+@using BlogApp.Shared.Constant
+@model BlogApp.FrontEnd.Pages.Articles.DetailsModel
+@{
+    ViewData["Title"] = "Artículo";
+}
+
+@if(Model.ArticleDto != null)
+{
+    <div class="container mt-4 border p-4 bg-white rounded shadow-sm">
+        <input type="hidden" id="inputArticleId" value="@Model.ArticleDto.Id" />
+        <h3 class="fw-bold text-primary">@Model.ArticleDto.Title</h3>
+        <p class="fw-semibold">@Model.ArticleDto.CreatedByName - @Model.ArticleDto.CreatedAt.ToString(Parameters.FormatDateTime)</p>
+
+        <p>
+            @Model.ArticleDto.Summary
+        </p>
+
+        <p>
+            @Model.ArticleDto.Content
+        </p>
+
+        <button id="toggleComents" class="btn btn-primary mb-3">Mostrar comentarios</button>
+
+        <div id="commentSection" style="display: none;">
+            <partial name="_ListComments" model="Model.Comments" />
+        </div>
+
+    </div>
+}
+else
+{
+    <p>
+        Error
+    </p>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#toggleComents').click(function () {
+                const $comentarios = $('#commentSection');
+                if ($comentarios.is(':visible')) {
+                    $comentarios.hide();
+                    $(this).text('Mostrar comentarios');
+                } else {
+                    $comentarios.show();
+                    $(this).text('Ocultar comentarios');
+                }
+            });
+        });
+
+        function evtSaveComment(){
+            const idArticle = $("#inputArticleId").val();
+
+            const formData = {
+                    ArticleId: idArticle,
+                    Content: $("#inputComment").val(),
+                };
+
+            var url = '@Url.Page("/Articles/details", "SaveComment")';
+
+            $.ajax({
+                    url: url,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+                        console.log(response);
+                        if(response.IsSuccess){
+                            $.get('@Url.Page("/Articles/details", "CommentsByArticle")', {id : idArticle})
+                            .done(function(response){
+                                $("#commentSection").html(response);
+                            });
+                        }
+                        else{
+                           alert(response.Message);
+                        }
+                    },
+                    error: function (xhr) {
+                        let message = 'Error al guardar el comentario.';
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            message = xhr.responseJSON.message;
+                        }
+                        alert(message);
+                    }
+                });
+        };
+    </script>
+}

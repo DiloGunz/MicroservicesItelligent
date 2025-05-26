@@ -20,21 +20,15 @@ public class GloblalExceptionHandlingMiddleware : IMiddleware
         {
             _logger.LogError(e, e.Message);
 
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
-            ProblemDetails problem = new()
+            if (!context.Response.HasStarted)
             {
-                Status = (int)HttpStatusCode.InternalServerError,
-                Type = "Server Error",
-                Title = "Server Error",
-                Detail = "An internal server has ocurred."
-            };
-
-            string json = JsonSerializer.Serialize(problem);
-
-            context.Response.ContentType = "application/json";
-
-            await context.Response.WriteAsync(json);
+                context.Response.Redirect("/Error");
+            }
+            else
+            {
+                _logger.LogWarning("No se pudo redirigir a /Error porque la respuesta ya había comenzado.");
+                throw; 
+            }
         }
     }
 }

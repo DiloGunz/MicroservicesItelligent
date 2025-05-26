@@ -28,10 +28,13 @@ public class GetPagedArticleQueryHandler : IRequestHandler<GetPagedArticleQuery,
     {
         try
         {
+            var upperCriteria = (request.Criteria ?? "").ToUpper().Trim();
+
             var data = await _articleRepository.GetPagedAsync(
                 request.Page,
                 request.Take,
-                x => x.OrderByDescending(y => y.CreatedAt));
+                x => x.OrderByDescending(y => y.CreatedAt),
+                x => x.Title.Contains(upperCriteria) || x.Content.Contains(upperCriteria) || x.Summary!.Contains(upperCriteria));
 
             return _mapper.Map<DataCollection<ArticleListDto>>(data);
         }

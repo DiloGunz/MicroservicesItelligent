@@ -3,6 +3,5 @@
 public interface IHttpContextAccesorProvider
 {
     string GetAccessToken();
-    string GetCurrentUserAsJson();
     CurrentUserDto GetCurrentUser();
 }

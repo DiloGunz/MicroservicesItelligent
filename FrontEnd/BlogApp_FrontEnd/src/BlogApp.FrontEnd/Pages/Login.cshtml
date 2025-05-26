@@ -1,4 +1,5 @@
 ﻿@page
+@using BlogApp.Shared.Constants
 @model BlogApp.FrontEnd.Pages.LoginModel
 @{
     Layout = null;
@@ -81,7 +82,16 @@
                             <input type="password" name="repetirPassword" class="form-control" id="repeatPassword" required>
                         </div>
 
-                        <div id="mensajeError" class="text-danger"></div>
+                        <div class="mb-3">
+                            <label for="repeatPassword" class="form-label">Rol *</label>
+                            <select class="form-control" name="Role" id="rol">
+                                <option> .:. Seleccionar .:. </option>
+                                <option value="@RoleConstants.Admin">Admin</option>
+                                <option value="@RoleConstants.User"> Usuario </option>
+                            </select>
+                            
+                        </div>
+
                     </form>
                 </div>
 
@@ -121,7 +131,7 @@
                             .fadeIn();
 
                             setTimeout(() => {
-                                window.location.href = response.url;
+                                window.location.href = "/index";
                             }, 1000);
                         }
                         else{
@@ -167,11 +177,17 @@
                             $('#registerResult')
                             .removeClass('d-none alert-danger')
                             .addClass('alert-success')
-                            .text('Login exitoso, redireccionando...')
+                            .text('Usuario registrado con éxito')
                             .fadeIn();
 
                             setTimeout(() => {
                                 $("#registroModal").modal('hide');
+                                $('#registerResult')
+                                    .addClass('alert d-none')
+                                    .removeClass('alert-danger')
+                                    .removeClass('alert-success');
+
+                                $('#registroForm')[0].reset();
                             }, 1000);
                         }
                         else{
@@ -183,7 +199,7 @@
                         }
                     },
                     error: function (xhr) {
-                        let message = 'Error al iniciar sesión.';
+                        let message = 'Error al registrar usuario.';
                         if (xhr.responseJSON && xhr.responseJSON.message) {
                             message = xhr.responseJSON.message;
                         }

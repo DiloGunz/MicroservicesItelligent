@@ -25,6 +25,6 @@ public class DataCollection<T>
 
     public bool HasItems => Items.Any();
     public bool HasPrevious => Page > 1;
-    public bool HasNext => Page < Pages;
+    public bool HasNext => Page < Pages && Total > Take;
 
 }

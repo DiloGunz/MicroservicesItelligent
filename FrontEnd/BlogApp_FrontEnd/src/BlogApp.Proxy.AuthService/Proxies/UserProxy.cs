@@ -1,6 +1,6 @@
 ﻿using AuthService.Application.Models.AppUserCommands;
 using AuthService.Application.Models.AppUserDtos;
-using AuthService.Application.Models.Login;
+using AuthService.Application.Models.AppUserQueries;
 using BlogApp.Proxy.AuthService.Config;
 using BlogApp.Shared.Responses;
 using BlogApp.Shared.Utils;
@@ -14,23 +14,82 @@ public class UserProxy : IUserProxy
 {
     private readonly HttpClient _httpClient;
     private readonly ILogger<UserProxy> _logger;
+    private readonly HttpClient _httpIdentityClient;
 
-    public UserProxy(AuthHttpClient authHttpClient, ILogger<UserProxy> logger)
+    public UserProxy(AuthHttpClient authHttpClient, AuthIdentityHttpClient authIdentityHttpClient, ILogger<UserProxy> logger)
     {
         _httpClient = authHttpClient.HttpClient ?? throw new ArgumentNullException(nameof(authHttpClient));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _httpIdentityClient = authIdentityHttpClient.HttpClient ?? throw new ArgumentNullException(nameof(authIdentityHttpClient));
     }
 
-    public async Task<SimpleResponse<AppUserDto>> GetByIdAsync(long id)
+    public async Task<List<AppUserDto>> GetByIdsAsync(GetAppUserByIdsQuery query)
     {
         try
         {
-            return null;
+            try
+            {
+                var response = await _httpIdentityClient.PostAsJsonAsync($"/api/auth/GetByIds", query);
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = JsonSerializer.Deserialize<List<AppUserDto>>(
+                            await response.Content.ReadAsStringAsync(),
+                            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                    if (result != null)
+                    {
+                        return result;
+                    }
+                }
+
+                return new List<AppUserDto>();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                throw;
+            }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, ex.Message);
-            return new SimpleResponse<AppUserDto>().Failure(ex.Message);
+            throw;
+        }
+    }
+
+    public async Task<SimpleResponse<AppUserDto>> GetMeAsync()
+    {
+        try
+        {
+            try
+            {
+                var response = await _httpIdentityClient.GetAsync($"/api/auth/me");
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = JsonSerializer.Deserialize<AppUserDto>(
+                            await response.Content.ReadAsStringAsync(),
+                            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                    if (result != null)
+                    {
+                        return new SimpleResponse<AppUserDto>().Success(result);
+                    }
+                }
+
+                return new SimpleResponse<AppUserDto>().Failure("Error al obtener datos del usuario");
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                throw;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            throw;
         }
     }
 

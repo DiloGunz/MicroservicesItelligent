@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ArticlesService.Application.CommandHandlers.ArticleCommandHandlers.Edit;
 
-public class EditArticleCommandHandler : IRequestHandler<EditArticleCommand, ErrorOr<Unit>>
+public class EditArticleCommandHandler : IRequestHandler<EditArticleCommand, ErrorOr<long>>
 {
     private readonly IArticleRepository _articleRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -23,7 +23,7 @@ public class EditArticleCommandHandler : IRequestHandler<EditArticleCommand, Err
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<ErrorOr<Unit>> Handle(EditArticleCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<long>> Handle(EditArticleCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -37,7 +37,7 @@ public class EditArticleCommandHandler : IRequestHandler<EditArticleCommand, Err
             _mapper.Map(request, data);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return data.Id;
         }
         catch (Exception ex)
         {

@@ -1,0 +1,38 @@
+﻿@page
+@using BlogApp.Shared.Constant
+@model BlogApp.FrontEnd.Pages.Articles.LastArticlesModel
+@{
+    ViewData["Title"] = "Últimos artículos";
+}
+
+<div class="container mt-4">
+    <h4 class="text-primary mb-4">Últimos artículos</h4>
+
+    @foreach (var item in Model.ArticlesCollection.Items)
+    {
+        <div class="card mb-3 shadow-sm border-0 rounded">
+            <div class="card-body">
+                <h5 class="card-title text-primary">@item.Title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    <strong>@item.CreatedByName - @item.CreatedAt.ToString(Parameters.FormatDateTime)</strong>
+                </h6>
+                <p class="card-text text-secondary" style="text-align: justify;">
+                    @item.Content
+                </p>
+                <a asp-page="/articles/details" asp-route-id="@item.Id" class="btn btn-primary float-end">Ver artículo</a>
+            </div>
+        </div>
+    }
+
+    <div class="d-flex justify-content-center align-items-center mt-4">
+        <a asp-page="/Articles/LastArticles"  asp-route-id="@(Model.ArticlesCollection.Page - 1)" class="btn btn-outline-primary me-2 @(!Model.ArticlesCollection.HasPrevious ? "disabled" : "")">
+            Página anterior
+        </a>
+
+        <span class="mx-3 fw-bold">Página @Model.ArticlesCollection.Page</span>
+
+        <a asp-page="/Articles/LastArticles" asp-route-id="@(Model.ArticlesCollection.Page + 1)" class="btn btn-outline-primary ms-2 @(!Model.ArticlesCollection.HasNext ? "disabled" : "")">
+            Página siguiente
+        </a>
+    </div>
+</div>

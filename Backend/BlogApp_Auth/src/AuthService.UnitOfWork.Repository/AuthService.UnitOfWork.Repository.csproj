@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AuthService.Repository.SQLite\AuthService.Repository.SQLite.csproj" />
+    <ProjectReference Include="..\AuthService.UnitOfWork.Abstraction\AuthService.UnitOfWork.Abstraction.csproj" />
+    <ProjectReference Include="..\AuthService.UnitOfWork.SQLite\AuthService.UnitOfWork.SQLite.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -6,4 +6,5 @@ public record ArticleListDto
     public string Title { get; set; }
     public DateTime CreatedAt { get; set; }
     public long CreatedBy { get; set; }
+    public string CreatedByName { get; set; }
 }

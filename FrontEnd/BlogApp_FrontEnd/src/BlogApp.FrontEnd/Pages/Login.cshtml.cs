@@ -5,6 +5,7 @@ using BlogApp.Shared.ContextAccessor;
 using BlogApp.Shared.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
@@ -12,6 +13,7 @@ using System.Text.Json;
 
 namespace BlogApp.FrontEnd.Pages;
 
+[AllowAnonymous]
 [IgnoreAntiforgeryToken]
 public class LoginModel : PageModel
 {
@@ -48,6 +50,12 @@ public class LoginModel : PageModel
         return new JsonResult(response);
     }
 
+    public async Task<IActionResult> OnGetLogoutAsync()
+    {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        return Redirect("~/");
+    }
+
     private async Task ConnectAsync(string accessToken)
     {
         try
@@ -62,6 +70,7 @@ public class LoginModel : PageModel
                 new Claim(ClaimTypes.NameIdentifier, user.sub),
                 new Claim(ClaimTypes.Name, user.email),
                 new Claim(ClaimTypes.Email, user.email),
+                new Claim("role", user.role),
                 new Claim("access_token", accessToken),
             };
 

@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AuthService.Repository.Abstraction\AuthService.Repository.Abstraction.csproj" />
+    <ProjectReference Include="..\AuthService.SharedKernel\AuthService.SharedKernel.csproj" />
+    <ProjectReference Include="..\AuthService.UnitOfWork.SQLite\AuthService.UnitOfWork.SQLite.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -24,5 +24,6 @@ public class ArticleMap : Profile
 		CreateMap<Article, ArticleDetailsDto>();
 
 		CreateMap<DataCollection<Article>, DataCollection<ArticleListDto>>();
+        CreateMap<DataCollection<Article>, DataCollection<ArticleDetailsDto>>();
     }
 }

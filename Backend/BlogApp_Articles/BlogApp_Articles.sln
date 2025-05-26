@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36119.2 d17.14
+VisualStudioVersion = 17.14.36119.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01. EndPoint", "01. EndPoint", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -36,6 +36,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticlesService.Repository.SQLite", "src\ArticlesService.Repository.SQLite\ArticlesService.Repository.SQLite.csproj", "{BEFB1636-8B89-4EFE-8831-A9C5D6D692B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticlesService.SharedKernel", "src\ArticlesService.SharedKernel\ArticlesService.SharedKernel.csproj", "{41B63988-F566-4A8B-A26B-8462887CCC60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06. Tests", "06. Tests", "{20D48422-EE48-455A-ADC5-3C59AD395F7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticlesService.UnitTest", "src\ArticlesService.UnitTest\ArticlesService.UnitTest.csproj", "{2D775D8E-8DEE-4B0B-AF5F-8E77867BE2FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +87,10 @@ Global
 		{41B63988-F566-4A8B-A26B-8462887CCC60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41B63988-F566-4A8B-A26B-8462887CCC60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41B63988-F566-4A8B-A26B-8462887CCC60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D775D8E-8DEE-4B0B-AF5F-8E77867BE2FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D775D8E-8DEE-4B0B-AF5F-8E77867BE2FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D775D8E-8DEE-4B0B-AF5F-8E77867BE2FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D775D8E-8DEE-4B0B-AF5F-8E77867BE2FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +108,7 @@ Global
 		{52F56875-197E-4021-85E4-3C247730C003} = {A2CE01A7-F0D8-4BC2-82AC-31FCA0C3B5C6}
 		{BEFB1636-8B89-4EFE-8831-A9C5D6D692B7} = {A2CE01A7-F0D8-4BC2-82AC-31FCA0C3B5C6}
 		{41B63988-F566-4A8B-A26B-8462887CCC60} = {9F896FF0-7FD4-4394-8C37-3347209E7E68}
+		{2D775D8E-8DEE-4B0B-AF5F-8E77867BE2FA} = {20D48422-EE48-455A-ADC5-3C59AD395F7E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E48C2437-D7FD-4235-8D6B-F47B2D1F1D97}

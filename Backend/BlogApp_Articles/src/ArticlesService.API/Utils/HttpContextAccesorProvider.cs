@@ -1,4 +1,5 @@
 ﻿using ArticlesService.SharedKernel.ContextAccessor;
+using System.Security.Authentication;
 
 namespace ArticlesService.API.Utils;
 
@@ -24,7 +25,12 @@ public class HttpContextAccesorProvider : IHttpContextAccesorProvider
         try
         {
             var userId = _contextAccessor.HttpContext?.Items["UserId"]?.ToString();
-            return long.Parse(userId ?? "0");
+            var longId = long.Parse(userId ?? "0");
+            if (longId <= 0)
+            {
+                throw new AuthenticationException("Error de usuario");
+            }
+            return longId;
         }
         catch (Exception ex)
         {
@@ -38,6 +44,10 @@ public class HttpContextAccesorProvider : IHttpContextAccesorProvider
         try
         {
             var userRole = _contextAccessor.HttpContext?.Items["UserRole"]?.ToString();
+            if (string.IsNullOrWhiteSpace(userRole))
+            {
+                throw new AuthenticationException("Error de rol");
+            }
             return userRole;
         }
         catch (Exception ex)

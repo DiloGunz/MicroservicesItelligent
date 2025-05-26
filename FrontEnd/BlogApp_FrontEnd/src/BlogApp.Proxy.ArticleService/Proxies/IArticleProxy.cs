@@ -9,5 +9,9 @@ namespace BlogApp.Proxy.ArticleService.Proxies;
 public interface IArticleProxy
 {
     Task<DataCollection<ArticleListDto>> GetPagedAsync(GetPagedArticleQuery query);
+    Task<DataCollection<ArticleDetailsDto>> GetPagedLastAsync(GetPagedLastArticleQuery query);
     Task<SimpleResponse<long>> CreateAsync(CreateArticleCommand command);
+    Task<SimpleResponse<long>> EditAsync(EditArticleCommand command);
+    Task<SimpleResponse<dynamic>> DeleteAsync(DeleteArticleCommand command);
+    Task<ArticleDetailsDto> GetByIdAsync(long id);
 }

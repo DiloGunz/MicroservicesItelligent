@@ -23,7 +23,7 @@ public class CreateModel : PageModel
         var response = await _articleProxy.CreateAsync(command);
         if (response.IsSuccess)
         {
-            response.Url = "#";
+            response.Url = "/Articles/index";
         }
         return new JsonResult(response);
     }

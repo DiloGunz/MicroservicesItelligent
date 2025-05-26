@@ -45,21 +45,120 @@ public class ArticleProxy : IArticleProxy
         }
     }
 
+    public async Task<SimpleResponse<dynamic>> DeleteAsync(DeleteArticleCommand command)
+    {
+        try
+        {
+            var response = await _httpClient.DeleteAsync($"/api/articles/{command.Id}");
+            if (response.IsSuccessStatusCode)
+            {
+                return new SimpleResponse<dynamic>().Success(true);
+            }
+
+            return new SimpleResponse<dynamic>().Failure(await response.GetErrorMessages());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            throw;
+        }
+    }
+
+    public async Task<SimpleResponse<long>> EditAsync(EditArticleCommand command)
+    {
+        try
+        {
+            var response = await _httpClient.PutAsJsonAsync($"/api/articles/{command.Id}", command);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = JsonSerializer.Deserialize<long>(
+                        await response.Content.ReadAsStringAsync(),
+                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                return new SimpleResponse<long>().Success(result);
+            }
+
+            return new SimpleResponse<long>().Failure(await response.GetErrorMessages());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            throw;
+        }
+    }
+
+    public async Task<ArticleDetailsDto> GetByIdAsync(long id)
+    {
+        try
+        {
+            var response = await _httpClient.GetAsync($"/api/articles/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                var result = JsonSerializer.Deserialize<ArticleDetailsDto>(
+                        await response.Content.ReadAsStringAsync(),
+                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+
+            return null;
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            throw;
+        }
+    }
+
     public async Task<DataCollection<ArticleListDto>> GetPagedAsync(GetPagedArticleQuery query)
     {
         try
         {
-            var response = await _httpClient.GetAsync($"/api/articles?page={query.Page}&take={query.Take}");
+            var response = await _httpClient.GetAsync($"/api/articles?criteria={query.Criteria}&page={query.Page}&take={query.Take}");
             if (response.IsSuccessStatusCode)
             {
                 var result = JsonSerializer.Deserialize<DataCollection<ArticleListDto>>(
                         await response.Content.ReadAsStringAsync(),
                         new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                return result;
+                if (result != null)
+                {
+                    return result;
+                }
             }
 
             return new DataCollection<ArticleListDto>();
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            throw;
+        }
+    }
+
+    public async Task<DataCollection<ArticleDetailsDto>> GetPagedLastAsync(GetPagedLastArticleQuery query)
+    {
+        try
+        {
+            var response = await _httpClient.GetAsync($"/api/articles/GetPagedLast?page={query.Page}&take={query.Take}");
+            if (response.IsSuccessStatusCode)
+            {
+                var result = JsonSerializer.Deserialize<DataCollection<ArticleDetailsDto>>(
+                        await response.Content.ReadAsStringAsync(),
+                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+
+            return new DataCollection<ArticleDetailsDto>();
 
         }
         catch (Exception ex)

@@ -3,6 +3,8 @@ using BlogApp.FrontEnd.Utils.Middlewares;
 using BlogApp.Proxy.ArticleService.Config;
 using BlogApp.Proxy.AuthService.Config;
 using BlogApp.Shared.ContextAccessor;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogApp.FrontEnd.Config;
@@ -31,8 +33,8 @@ public static class DependencyInjection
         services.AddAuthentication("Cookies")
             .AddCookie("Cookies", options =>
             {
-                options.LoginPath = "/Account/Login";
-                options.LogoutPath = "/Account/Logout";
+                options.LoginPath = "/Login";
+                options.LogoutPath = "/login?handler=Logout";
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.SameSite = SameSiteMode.Strict;
@@ -40,10 +42,23 @@ public static class DependencyInjection
                 options.SlidingExpiration = true;
             });
 
-        services.AddAuthorization();
+        services.AddAuthorizationOptions();
 
         services.AddAuthService();
         services.AddArticleService();
+
+        return services;
+    }
+
+    private static IServiceCollection AddAuthorizationOptions(this IServiceCollection services)
+    {
+        services.AddAuthorization(options =>
+        {
+            var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(CookieAuthenticationDefaults.AuthenticationScheme)
+                .RequireAuthenticatedUser();
+
+            options.FallbackPolicy = defaultAuthorizationPolicyBuilder.Build();
+        });
 
         return services;
     }

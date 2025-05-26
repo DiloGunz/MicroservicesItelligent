@@ -1,0 +1,49 @@
+﻿@using ArticleService.Application.Models.Dtos.ArticlesDtos
+@using BlogApp.Shared.Collection
+@using BlogApp.Shared.Constant
+@model DataCollection<ArticleListDto>
+
+@if (!Model.HasItems)
+{
+    <div class="alert alert-info">No hay artículos disponibles.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Autor</th>
+                <th>Título</th>
+                <th>Fecha de Publicación</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var article in Model.Items)
+            {
+                <tr>
+                    <td>@article.CreatedByName</td>
+                    <td>@article.Title</td>
+                    <td>@article.CreatedAt.ToString(Parameters.FormatDateTime)</td>
+                    <td>
+                        <a asp-page="/Articles/details" asp-route-id="@article.Id" class="btn btn-sm btn-success">Detalles</a>
+                        <a asp-page="/articles/edit" asp-route-id="@article.Id" class="btn btn-sm  btn-primary">Editar</a>
+                        <button type="button" class="btn btn-sm btn-danger" onclick="Delete_click('@article.Id');">Eliminar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center align-items-center mt-4">
+        <button type="button" class="btn btn-outline-primary me-2 @(!Model.HasPrevious ? "disabled" : "")" onclick="evtChangePage('@(Model.Page - 1)');">
+            Página anterior
+        </button>
+        <input type="hidden" value="@Model.Page" id="inputPage"/>
+        <span class="mx-3 fw-bold">Página @Model.Page</span>
+
+        <button type="button" class="btn btn-outline-primary ms-2 @(!Model.HasNext ? "disabled" : "")" onclick="evtChangePage('@(Model.Page + 1)');">
+            Página siguiente
+        </button>
+    </div>
+}

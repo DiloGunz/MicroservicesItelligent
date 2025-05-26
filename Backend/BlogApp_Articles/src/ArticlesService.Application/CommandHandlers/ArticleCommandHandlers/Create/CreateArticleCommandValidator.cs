@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace ArticlesService.Application.CommandHandlers.ArticleCommandHandlers.Create;
 
-public abstract class CreateArticleCommandValidator : AbstractValidator<CreateArticleCommand>
+public class CreateArticleCommandValidator : AbstractValidator<CreateArticleCommand>
 {
 	public CreateArticleCommandValidator()
 	{
